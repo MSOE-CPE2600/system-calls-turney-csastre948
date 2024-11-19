@@ -1,23 +1,31 @@
-CFLAGS=-c -g -Wall -Werror
-CC=gcc
+# Compiler
+CC = gcc
 
-all: info pinfo finfo pmod
+# Compiler flags
+CFLAGS = -Wall -Wextra -std=c99
 
-info: info.o
-	$(CC) -o info info.o
+# Executable names
+EXECUTABLES = info pinfo pmod finfo
 
-pinfo: pinfo.o
-	$(CC) -o pinfo pinfo.o
+# Target to build all executables
+all: $(EXECUTABLES)
 
-finfo: finfo.o
-	$(CC) -o finfo finfo.o
+# Compile info.c into the 'info' executable
+info: info.c
+	$(CC) $(CFLAGS) -o info info.c -lrt
 
-pmod: pmod.o
-	$(CC) -o pmod pmod.o
+# Compile pinfo.c into the 'pinfo' executable
+pinfo: pinfo.c
+	$(CC) $(CFLAGS) -o pinfo pinfo.c -lrt
 
+# Compile pmod.c into the 'pmod' executable
+pmod: pmod.c
+	$(CC) $(CFLAGS) -o pmod pmod.c -lrt
+
+# Compile finfo.c into the 'finfo' executable
+finfo: finfo.c
+	$(CC) $(CFLAGS) -o finfo finfo.c
+
+# Clean up object files and executables
 clean:
-	rm -f *.o info pinfo finfo pmod
-
-%.o: %.c
-	$(CC) $(CFLAGS) -o $@ $<
-
+	rm -f $(EXECUTABLES)
